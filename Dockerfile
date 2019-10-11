@@ -4,7 +4,7 @@ MAINTAINER Stefan Rohe <think@hotmail.de>
 
 ENV \
   COMPILER=ldc \
-  COMPILER_VERSION=1.10.0-beta2
+  COMPILER_VERSION=1.11.0
 
 RUN apt-get update && apt-get install -y curl libcurl3 build-essential \
  && curl -fsS -o /tmp/install.sh https://dlang.org/install.sh \
