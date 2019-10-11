@@ -4,7 +4,7 @@ MAINTAINER Stefan Rohe <think@hotmail.de>
 
 ENV \
   COMPILER=ldc \
-  COMPILER_VERSION=1.9.0-beta1
+  COMPILER_VERSION=1.17.0
 
 RUN apt-get update && apt-get install -y curl libcurl3 build-essential \
  && curl -fsS -o /tmp/install.sh https://dlang.org/install.sh \
@@ -15,6 +15,11 @@ RUN apt-get update && apt-get install -y curl libcurl3 build-essential \
  && rm -rf /var/cache/apt \
  && rm -rf /dlang/${COMPILER}-*/lib32 \
  && rm -rf /dlang/dub-1.0.0/dub.tar.gz
+
+RUN git clone https://www.github.com/AuburnSounds/dplug.git \
+  && cd dplug/tools/dplug-build \
+  && dub -a x86_64 -b release-nobounds --compiler "${COMPILER}2" \
+  && mv dplug-build /usr/local/bin/dplug-build
 
 ENV \
   PATH=/dlang/${COMPILER}-${COMPILER_VERSION}/bin:${PATH} \
