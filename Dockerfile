@@ -1,31 +1,27 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 MAINTAINER Stefan Rohe <think@hotmail.de>
 
 ENV \
   COMPILER=ldc \
-  COMPILER_VERSION=1.18.0-beta2
+  COMPILER_VERSION=1.27.1
 
-RUN apt-get update && apt-get install -y curl libcurl3 build-essential \
- && curl -fsS -o /tmp/install.sh https://dlang.org/install.sh \
- && bash /tmp/install.sh -p /dlang install "${COMPILER}-${COMPILER_VERSION}" \
- && rm /tmp/install.sh \
- && apt-get auto-remove -y curl build-essential \
- && apt-get install -y gcc cmake \
- && rm -rf /var/cache/apt \
- && rm -rf /dlang/${COMPILER}-*/lib32 \
- && rm -rf /dlang/dub-1.0.0/dub.tar.gz
-
-RUN git clone https://www.github.com/AuburnSounds/dplug.git \
-  && cd dplug/tools/dplug-build \
-  && dub -a x86_64 -b release-nobounds --compiler "${COMPILER}2" \
-  && mv dplug-build /usr/local/bin/dplug-build
-
+RUN apt-get update && apt-get install -y curl libcurl4 build-essential \
+  && curl -fsS -o /tmp/install.sh https://dlang.org/install.sh \
+  && bash /tmp/install.sh -p /dlang install "${COMPILER}-${COMPILER_VERSION}" \
+  && rm /tmp/install.sh \
+  && apt-get auto-remove -y curl build-essential \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends gcc gcc-multilib cmake git \
+  && rm -rf /var/cache/apt \
+  && rm -rf /dlang/${COMPILER}-*/lib32
+  
 ENV \
-  PATH=/dlang/${COMPILER}-${COMPILER_VERSION}/bin:${PATH} \
-  LD_LIBRARY_PATH=/dlang/${COMPILER}-${COMPILER_VERSION}/lib \
-  LIBRARY_PATH=/dlang/${COMPILER}-${COMPILER_VERSION}/lib \
+  PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/bin:${PATH}" \
+  LD_LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib" \
+  LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib" \
   PS1="(${COMPILER}-${COMPILER_VERSION}) \\u@\\h:\\w\$"
+
+RUN ldconfig
 
 RUN cd /tmp \
  && echo 'void main() {import std.stdio; stdout.writeln("it works"); }' > test.d \
@@ -34,22 +30,21 @@ RUN cd /tmp \
 
 WORKDIR /src
 
-ENV GOSU_VERSION 1.9
+ENV GOSU_VERSION 1.14
 RUN apt-get update \
- && apt-get install -y --no-install-recommends ca-certificates wget \
- && wget -O /usr/local/bin/gosu \
-        "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture)" \
- && wget -O /usr/local/bin/gosu.asc \
-        "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture).asc" \
- && export GNUPGHOME="$(mktemp -d)" \
- && gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
- && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
- && rm -r "${GNUPGHOME}" /usr/local/bin/gosu.asc \
- && chmod +x /usr/local/bin/gosu \
- && gosu nobody true \
- && apt-get auto-remove -y wget \
- && rm -rf /var/lib/apt/lists/* \
- && chmod 755 -R /dlang
+  && apt-get install -y ca-certificates wget gpg \
+  && wget -O /usr/local/bin/gosu \
+        "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
+  && wget -O /usr/local/bin/gosu.asc \
+        "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture | awk -F- '{ print $NF }').asc" \
+  && export GNUPGHOME="$(mktemp -d)" \
+  && gpg --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
+  && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
+  && rm -r "${GNUPGHOME}" /usr/local/bin/gosu.asc \
+  && chmod +x /usr/local/bin/gosu \
+  && gosu nobody true \
+  && apt-get auto-remove -y wget \
+  && rm -rf /var/lib/apt/lists/*
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
