@@ -41,7 +41,7 @@ RUN apt-get install -y ca-certificates wget gpg \
   && chmod +x /usr/local/bin/gosu \
   && gosu nobody true \
   && apt-get auto-remove -y wget curl build-essential gpg git cmake \
-  && apt-get install -y libxml2-dev libxml2 \
+  && apt-get install -y libxml2-dev zlib1g-dev \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /var/cache/apt
 
