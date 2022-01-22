@@ -4,15 +4,13 @@ MAINTAINER Stefan Rohe <think@hotmail.de>
 
 ENV \
   COMPILER=ldc \
-  COMPILER_VERSION=1.27.1
+  COMPILER_VERSION=1.28.1
 
 RUN apt-get update && apt-get install -y curl libcurl4 build-essential \
   && curl -fsS -o /tmp/install.sh https://dlang.org/install.sh \
   && bash /tmp/install.sh -p /dlang install "${COMPILER}-${COMPILER_VERSION}" \
   && rm /tmp/install.sh \
-  && apt-get auto-remove -y curl build-essential \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends gcc gcc-multilib cmake git \
-  && rm -rf /var/cache/apt \
   && rm -rf /dlang/${COMPILER}-*/lib32
   
 ENV \
@@ -31,8 +29,7 @@ RUN cd /tmp \
 WORKDIR /src
 
 ENV GOSU_VERSION 1.14
-RUN apt-get update \
-  && apt-get install -y ca-certificates wget gpg \
+RUN apt-get install -y ca-certificates wget gpg \
   && wget -O /usr/local/bin/gosu \
         "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
   && wget -O /usr/local/bin/gosu.asc \
@@ -40,11 +37,13 @@ RUN apt-get update \
   && export GNUPGHOME="$(mktemp -d)" \
   && gpg --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
   && gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
-  && rm -r "${GNUPGHOME}" /usr/local/bin/gosu.asc \
+  && rm -rf "${GNUPGHOME}" /usr/local/bin/gosu.asc \
   && chmod +x /usr/local/bin/gosu \
   && gosu nobody true \
-  && apt-get auto-remove -y wget \
-  && rm -rf /var/lib/apt/lists/*
+  && apt-get auto-remove -y wget curl build-essential gpg git cmake \
+  && apt-get install -y libxml2-dev libxml2 \
+  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /var/cache/apt
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
