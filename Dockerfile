@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.authors="Filipp Chertiev <f@fzfx.ru>"
 
 ENV \
   COMPILER=ldc \
-  COMPILER_BIN=${COMPILER}2
+  COMPILER_BIN=${COMPILER}2 \
   COMPILER_VERSION=1.29.0
 
 RUN apt-get update && apt-get install -y curl libcurl4 build-essential \
