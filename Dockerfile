@@ -8,11 +8,13 @@ ENV \
   COMPILER_BIN=${COMPILER}2 \
   COMPILER_VERSION=1.29.0
 
-RUN apt-get update && apt-get install -y curl libcurl4 build-essential \
+RUN apt-get -yq update && apt-get install -yq apt-utils
+
+RUN apt-get install -yq curl libcurl4 build-essential \
   && curl -fsS -o /tmp/install.sh https://dlang.org/install.sh \
   && bash /tmp/install.sh -p /dlang install "${COMPILER}-${COMPILER_VERSION}" \
   && rm /tmp/install.sh \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends gcc gcc-multilib cmake git \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends gcc gcc-multilib cmake git \
   && rm -rf /dlang/${COMPILER}-*/lib32
   
 ENV \
@@ -26,15 +28,15 @@ RUN ldconfig
 RUN cd /tmp \
  && echo 'void main() {import std.stdio; stdout.writeln("it works"); }' > test.d \
  && ldc2 test.d \
- && ./test && rm test*
+ && ./test && rm -f test*
 
 WORKDIR /src
 
 ENV GOSU_VERSION 1.14
-RUN apt-get install -y ca-certificates wget gpg \
-  && wget -O /usr/local/bin/gosu \
+RUN apt-get install -yq ca-certificates wget gpg \
+  && wget -nvO /usr/local/bin/gosu \
         "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
-  && wget -O /usr/local/bin/gosu.asc \
+  && wget -nvO /usr/local/bin/gosu.asc \
         "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture | awk -F- '{ print $NF }').asc" \
   && export GNUPGHOME="$(mktemp -d)" \
   && gpg --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
@@ -42,8 +44,8 @@ RUN apt-get install -y ca-certificates wget gpg \
   && rm -rf "${GNUPGHOME}" /usr/local/bin/gosu.asc \
   && chmod +x /usr/local/bin/gosu \
   && gosu nobody true \
-  && apt-get auto-remove -y wget curl build-essential gpg git cmake \
-  && apt-get install -y libxml2-dev zlib1g-dev libssl-dev \
+  && apt-get auto-remove -yq wget curl build-essential gpg git cmake \
+  && apt-get install -yq libxml2-dev zlib1g-dev libssl-dev \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /var/cache/apt
 
