@@ -34,9 +34,9 @@ WORKDIR /src
 
 ENV GOSU_VERSION 1.14
 RUN apt-get install -yq ca-certificates wget gpg \
-  && wget -nvO /usr/local/bin/gosu \
+  && wget --no-verbose -O /usr/local/bin/gosu \
         "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
-  && wget -nvO /usr/local/bin/gosu.asc \
+  && wget --no-verbose -O /usr/local/bin/gosu.asc \
         "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture | awk -F- '{ print $NF }').asc" \
   && export GNUPGHOME="$(mktemp -d)" \
   && gpg --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
