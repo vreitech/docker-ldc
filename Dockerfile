@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 LABEL org.opencontainers.image.authors="Stefan Rohe <think@hotmail.de>"
 LABEL org.opencontainers.image.authors="Filipp Chertiev <f@fzfx.ru>"
@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.authors="Filipp Chertiev <f@fzfx.ru>"
 ENV \
   COMPILER=ldc \
   COMPILER_BIN=${COMPILER}2 \
-  COMPILER_VERSION=1.30.0-beta1
+  COMPILER_VERSION=1.30.0
 
 RUN apt-get -yq update && apt-get install -yq apt-utils
 
