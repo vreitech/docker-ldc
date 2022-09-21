@@ -21,7 +21,8 @@ ENV \
   PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/bin:${PATH}" \
   LD_LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib" \
   LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib" \
-  PS1="(${COMPILER}-${COMPILER_VERSION}) \\u@\\h:\\w\$"
+  PS1="(${COMPILER}-${COMPILER_VERSION}) \\u@\\h:\\w\$" \
+  DC=${COMPILER_BIN}
 
 RUN ldconfig
 
