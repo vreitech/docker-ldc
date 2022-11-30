@@ -48,7 +48,9 @@ RUN apt-get install -yq ca-certificates wget gpg \
   && apt-get auto-remove -yq wget curl build-essential gpg git cmake \
   && apt-get install -yq libxml2-dev zlib1g-dev libssl-dev \
   && rm -rf /var/lib/apt/lists/* \
-  && rm -rf /var/cache/apt
+  && rm -rf /var/cache/apt \
+  && rm -rf /var/log/apt \
+  && rm -f /var/log/alternatives.log /var/log/dpkg.log
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
