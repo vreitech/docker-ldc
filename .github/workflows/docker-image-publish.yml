@@ -2,7 +2,7 @@ name: Docker Image CI publish
 
 on:
   release:
-    types: [published]
+    created
 
 jobs:
   push_to_registry:
@@ -37,7 +37,7 @@ jobs:
           ghcr.io/${{ github.repository }}
 
     - name: Build and push Docker image
-      uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      uses: docker/build-push-action@v4.0.0
       with:
         context: .
         push: true
