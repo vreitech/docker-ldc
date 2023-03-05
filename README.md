@@ -1,5 +1,4 @@
 [![Docker pulls](https://img.shields.io/docker/pulls/vreitech/ldc.svg)](https://hub.docker.com/r/vreitech/ldc/)
-[![Docker Build](https://img.shields.io/docker/automated/vreitech/ldc.svg)](https://hub.docker.com/r/vreitech/ldc/)
 [![Latest Tag](https://img.shields.io/github/tag/vreitech/docker-ldc.svg)](https://hub.docker.com/r/vreitech/ldc/)
 
 # About this fork
