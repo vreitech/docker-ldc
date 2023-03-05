@@ -1,8 +1,7 @@
 name: Docker Image CI publish
 
 on:
-  release:
-    created
+  release: [created]
 
 jobs:
   push_to_registry:
