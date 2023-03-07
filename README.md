@@ -28,5 +28,5 @@ Allows to use LDC compiler without installation.
 Place a `test.d` (for example with the contents of `import std.stdio; void main() { writeln("It works!"); }`) in your current directory.
 Then execute
 ```
-docker run --rm -ti -v $(pwd):/src vreitech/ldc ldc2 test.d
+docker run --rm -ti -v $(pwd):/src docker.io/vreitech/ldc ldc2 test.d
 ```
