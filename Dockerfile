@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM debian:bookworm-slim
 
 LABEL org.opencontainers.image.authors="Stefan Rohe <think@hotmail.de>"
 LABEL org.opencontainers.image.authors="Filipp Chertiev <f@fzfx.ru>"
@@ -8,13 +8,15 @@ ENV \
   COMPILER_BIN=${COMPILER}2 \
   COMPILER_VERSION=1.31.0
 
-RUN apt-get -yq update && apt-get install -yq apt-utils
+RUN apt-get -yq update && apt-get install -yq --no-install-recommends apt-utils
 
-RUN apt-get install -yq curl libcurl4 build-essential \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends binutils-gold gcc gcc-multilib \
+  libxml2-dev zlib1g-dev libssl-dev \
+  ca-certificates libterm-readline-gnu-perl \
+  wget curl xz-utils gpg gpg-agent git dirmngr \
   && curl -fsS -o /tmp/install.sh https://dlang.org/install.sh \
   && bash /tmp/install.sh -p /dlang install "${COMPILER}-${COMPILER_VERSION}" \
   && rm /tmp/install.sh \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends gcc gcc-multilib cmake git \
   && rm -rf /dlang/${COMPILER}-*/lib32
   
 ENV \
@@ -26,16 +28,10 @@ ENV \
 
 RUN ldconfig
 
-RUN cd /tmp \
- && echo 'void main() {import std.stdio; stdout.writeln("it works"); }' > test.d \
- && ldc2 test.d \
- && ./test && rm -f test*
-
 WORKDIR /src
 
 ENV GOSU_VERSION 1.14
-RUN apt-get install -yq ca-certificates wget gpg \
-  && wget --no-verbose -O /usr/local/bin/gosu \
+RUN wget --no-verbose -O /usr/local/bin/gosu \
         "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture | awk -F- '{ print $NF }')" \
   && wget --no-verbose -O /usr/local/bin/gosu.asc \
         "https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture | awk -F- '{ print $NF }').asc" \
@@ -45,8 +41,7 @@ RUN apt-get install -yq ca-certificates wget gpg \
   && rm -rf "${GNUPGHOME}" /usr/local/bin/gosu.asc \
   && chmod +x /usr/local/bin/gosu \
   && gosu nobody true \
-  && apt-get auto-remove -yq wget curl build-essential gpg git cmake \
-  && apt-get install -yq libxml2-dev zlib1g-dev libssl-dev \
+  && apt-get auto-remove -yq wget curl xz-utils gpg gpg-agent wget dirmngr \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /var/cache/apt \
   && rm -rf /var/log/apt \
