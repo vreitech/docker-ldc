@@ -3,7 +3,7 @@ name: Docker Image CI publish
 on:
   create:
     ref_type: "tag"
-    ref: "tags/*"
+    ref: "tags/v*"
 
 jobs:
   push_to_registry:
