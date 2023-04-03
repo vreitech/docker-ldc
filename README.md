@@ -1,4 +1,4 @@
-[![Docker Latest Tag](https://img.shields.io/github/tag/vreitech/docker-ldc.svg)](https://hub.docker.com/r/vreitech/ldc/)
+[![Docker Latest Tag](https://img.shields.io/github/tag/vreitech/docker-ldc.svg)](https://hub.docker.com/r/vreitech/docker-ldc/)
 [![GHCR Latest Tag](https://ghcr-badge.egpl.dev/vreitech/docker-ldc/latest_tag)](https://github.com/vreitech/docker-ldc/pkgs/container/docker-ldc)
 [![GHCR Images Size](https://ghcr-badge.egpl.dev/vreitech/docker-ldc/size)](https://github.com/vreitech/docker-ldc/pkgs/container/docker-ldc)
 
@@ -29,5 +29,5 @@ Allows to use LDC compiler without installation.
 Place a `test.d` (for example with the contents of `import std.stdio; void main() { writeln("It works!"); }`) in your current directory.
 Then execute
 ```
-docker run --rm -ti -v $(pwd):/src docker.io/vreitech/ldc ldc2 test.d
+docker run --rm -ti -v $(pwd):/src docker.io/vreitech/docker-ldc ldc2 test.d
 ```
