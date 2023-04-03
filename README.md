@@ -1,5 +1,6 @@
-[![Docker pulls](https://img.shields.io/docker/pulls/vreitech/ldc.svg)](https://hub.docker.com/r/vreitech/ldc/)
-[![Latest Tag](https://img.shields.io/github/tag/vreitech/docker-ldc.svg)](https://hub.docker.com/r/vreitech/ldc/)
+[![Docker Latest Tag](https://img.shields.io/github/tag/vreitech/docker-ldc.svg)](https://hub.docker.com/r/vreitech/ldc/)
+[![GHCR Latest Tag](https://ghcr-badge.egpl.dev/vreitech/docker-ldc/latest_tag)](https://github.com/vreitech/docker-ldc/pkgs/container/docker-ldc)
+[![GHCR Images Size](https://ghcr-badge.egpl.dev/vreitech/docker-ldc/size)](https://github.com/vreitech/docker-ldc/pkgs/container/docker-ldc)
 
 # About this fork
 
