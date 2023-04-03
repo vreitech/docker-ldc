@@ -1,5 +1,4 @@
 [![Docker pulls](https://img.shields.io/docker/pulls/vreitech/ldc.svg)](https://hub.docker.com/r/vreitech/ldc/)
-[![Docker Build](https://img.shields.io/docker/automated/vreitech/ldc.svg)](https://hub.docker.com/r/vreitech/ldc/)
 [![Latest Tag](https://img.shields.io/github/tag/vreitech/docker-ldc.svg)](https://hub.docker.com/r/vreitech/ldc/)
 
 # About this fork
@@ -26,8 +25,8 @@ Allows to use LDC compiler without installation.
 
 ## Usage
 
-Place a `test.d` in your current directory.
+Place a `test.d` (for example with the contents of `import std.stdio; void main() { writeln("It works!"); }`) in your current directory.
 Then execute
 ```
-docker run --rm -ti -v $(pwd):/src vreitech/ldc ldc2 test.d
+docker run --rm -ti -v $(pwd):/src docker.io/vreitech/ldc ldc2 test.d
 ```
