@@ -13,7 +13,7 @@ Docker image for LLVM-based [D](http://dlang.org) Compiler.
 
 ## Motivation
 
-Installation of a compiler sometimes is cumbersome. This Docker image should take this pain and allow you to easily switch between Versions of the same compiler and even different compilers.
+Installation of a compiler sometimes is cumbersome. This Docker image should take this pain and allow you to easily switch between Versions of the compiler.
 
 In case a native installation is required, `curl -fsS https://dlang.org/install.sh | bash -s ldc` could be used.
 
@@ -25,4 +25,8 @@ Place a `test.d` (for example with the contents of `import std.stdio; void main(
 Then execute
 ```
 docker run --rm -it -v "$(pwd):/src" docker.io/vreitech/docker-ldc ldc2 test.d
+```
+or
+```
+docker run --rm -it -v "$(pwd):/src" ghcr.io/vreitech/docker-ldc ldc2 test.d
 ```
