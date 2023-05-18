@@ -3,14 +3,15 @@ FROM debian:bookworm-slim
 LABEL org.opencontainers.image.authors="Stefan Rohe <think@hotmail.de>"
 LABEL org.opencontainers.image.authors="Filipp Chertiev <f@fzfx.ru>"
 
+ENV DEBIAN_FRONTEND=noninteractive
 ENV \
   COMPILER=ldc \
   COMPILER_BIN=${COMPILER}2 \
   COMPILER_VERSION=1.32.2
 
-RUN apt-get -yq update && apt-get install -yq --no-install-recommends apt-utils
+RUN apt-get -yqq -o=Dpkg::Use-Pty=0 update && apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install apt-utils
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends binutils-gold gcc gcc-multilib \
+RUN apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install binutils-gold gcc gcc-multilib \
   libxml2-dev zlib1g-dev libssl-dev \
   ca-certificates libterm-readline-gnu-perl \
   wget curl xz-utils gpg gpg-agent git dirmngr \
@@ -41,7 +42,7 @@ RUN wget --no-verbose -O /usr/local/bin/gosu \
   && rm -rf "${GNUPGHOME}" /usr/local/bin/gosu.asc \
   && chmod +x /usr/local/bin/gosu \
   && gosu nobody true \
-  && apt-get auto-remove -yq wget curl xz-utils gpg gpg-agent wget dirmngr \
+  && apt-get -yqq -o=Dpkg::Use-Pty=0 auto-remove wget curl xz-utils gpg gpg-agent wget dirmngr \
   && rm -rf /var/lib/apt/lists/* \
   && rm -rf /var/cache/apt \
   && rm -rf /var/log/apt \
