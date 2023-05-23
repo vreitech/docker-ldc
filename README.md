@@ -21,6 +21,7 @@ Docker image allows to use LDC compiler without installation.
 
 ## Includes (latest version)
 
+- Debian 12 (bookworm) environment
 - ldc2 compiler v1.32.2
 - dub package manager v1.31.1
 - libxml2 library v2.9.14
