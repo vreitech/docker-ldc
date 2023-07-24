@@ -1,4 +1,4 @@
-[![Docker Image CI publish](https://github.com/vreitech/docker-ldc/actions/workflows/docker-image.yml/badge.svg)](https://hub.docker.com/r/vreitech/docker-ldc/)
+\[![Docker Image CI publish](https://github.com/vreitech/docker-ldc/actions/workflows/docker-image.yml/badge.svg)](https://hub.docker.com/r/vreitech/docker-ldc/)
 [![Docker Latest Tag](https://img.shields.io/github/tag/vreitech/docker-ldc.svg)](https://hub.docker.com/r/vreitech/docker-ldc/)
 [![GHCR Latest Tag](https://ghcr-badge.egpl.dev/vreitech/docker-ldc/latest_tag)](https://github.com/vreitech/docker-ldc/pkgs/container/docker-ldc)
 [![GHCR Images Size](https://ghcr-badge.egpl.dev/vreitech/docker-ldc/size)](https://github.com/vreitech/docker-ldc/pkgs/container/docker-ldc)
@@ -22,11 +22,11 @@ Docker image allows to use LDC compiler without installation.
 ## Includes (latest version)
 
 - Debian 12 (bookworm) environment
-- ldc2 compiler v1.32.2
-- dub package manager v1.31.1
+- ldc2 compiler v1.33.0
+- dub package manager v1.32.1
 - libxml2 library v2.9.14
 - libz (zlib) library v1.2.13
-- libssl library v3.0.8
+- libssl library v3.0.9
 
 ## Usage
 

@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV \
   COMPILER=ldc \
   COMPILER_BIN=${COMPILER}2 \
-  COMPILER_VERSION=1.32.2
+  COMPILER_VERSION=1.33.0
 
 RUN apt-get -yqq -o=Dpkg::Use-Pty=0 update && apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install apt-utils
 
