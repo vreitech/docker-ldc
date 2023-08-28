@@ -33,6 +33,8 @@ jobs:
       id: meta
       uses: docker/metadata-action@v4
       with:
+        flavor: |
+          latest=false
         images: |
           vreitech/docker-ldc
           ghcr.io/${{ github.repository }}
