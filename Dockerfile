@@ -1,9 +1,5 @@
 ARG arg_compiler=ldc
-<<<<<<< .merge_file_rCutC4
-ARG arg_compiler_version=1.33.0
-=======
 ARG arg_compiler_version=1.34.0
->>>>>>> .merge_file_XpiZ0I
 
 FROM debian:bookworm-slim AS builder
 
