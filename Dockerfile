@@ -1,5 +1,9 @@
 ARG arg_compiler=ldc
+<<<<<<< .merge_file_rCutC4
 ARG arg_compiler_version=1.33.0
+=======
+ARG arg_compiler_version=1.34.0
+>>>>>>> .merge_file_XpiZ0I
 
 FROM debian:bookworm-slim AS builder
 
@@ -54,7 +58,7 @@ RUN apt-get -yqq -o=Dpkg::Use-Pty=0 update \
   && apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install ca-certificates libterm-readline-gnu-perl \
   curl \
   binutils-gold gcc gcc-multilib \
-  libxml2-dev zlib1g-dev \
+  libxml2-dev zlib1g-dev libssl-dev \
   && update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.gold" 20 \
   && update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.bfd" 10 \
   && ldconfig \
