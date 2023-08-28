@@ -1,9 +1,9 @@
 name: Docker Image CI publish
 
 on:
-  create:
-    ref_type: "tag"
-    ref: "tags/*"
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   push_to_registry:
@@ -34,7 +34,7 @@ jobs:
       uses: docker/metadata-action@v4
       with:
         images: |
-          vreitech/ldc
+          vreitech/docker-ldc
           ghcr.io/${{ github.repository }}
 
     - name: Build and push Docker image
