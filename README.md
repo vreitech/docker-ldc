@@ -25,10 +25,10 @@ Docker image allows to use LDC compiler without installation.
 - ldc2 compiler v1.34.0
 - ld.gold linker v1.16
 - ld.bfd linker v2.40
-- dub package manager v1.33.1
+- dub package manager v1.34.0
 - libxml2 library v2.9.14
 - libz (zlib) library v1.2.13
-- libssl library v3.0.9
+- libssl library v3.0.11
 
 ## Usage
 
