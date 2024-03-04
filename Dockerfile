@@ -1,5 +1,5 @@
-ARG arg_compiler=ldc
-ARG arg_compiler_version=1.36.0
+ARG arg_compiler=ldc2
+ARG arg_compiler_version=1.37.0
 
 FROM debian:bookworm-slim AS builder
 
@@ -14,9 +14,10 @@ RUN <<EOF bash
   apt-get -yqq -o=Dpkg::Use-Pty=0 update
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install apt-utils
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install ca-certificates libterm-readline-gnu-perl \
-  curl xz-utils gpg gpg-agent dirmngr
-  bash <(curl -LfsS https://dlang.org/install.sh) -p /dlang install "${COMPILER}-${COMPILER_VERSION}"
-  rm -rf /dlang/${COMPILER}-*/lib32
+  curl xz-utils
+  mkdir -p /dlang
+  tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VERSION}-linux-x86_64.tar.xz") -C /dlang
+  rm -rf /dlang/${COMPILER}-${COMPILER_VERSION}-linux-x86_64/lib32
 EOF
 
 FROM debian:bookworm-slim
@@ -32,10 +33,10 @@ WORKDIR /src
 ENV DEBIAN_FRONTEND=noninteractive \
   COMPILER=$arg_compiler \
   COMPILER_VERSION=$arg_compiler_version
-ENV COMPILER_BIN=${COMPILER}2 \
-  PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/bin:${PATH}" \
-  LD_LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib" \
-  LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib" \
+ENV COMPILER_BIN=${COMPILER} \
+  PATH="/dlang/${COMPILER}-${COMPILER_VERSION}-linux-x86_64/bin:${PATH}" \
+  LD_LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}-linux-x86_64/lib" \
+  LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}-linux-x86_64/lib" \
   PS1="(${COMPILER}-${COMPILER_VERSION}) \\u@\\h:\\w\$" \
   DC=${COMPILER_BIN}
 COPY --from=builder /dlang /dlang
