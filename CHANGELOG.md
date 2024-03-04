@@ -1,3 +1,9 @@
+# v1.37.0
+
+- Change LDC version to 1.37.0
+- Change dub package manager version to 1.36.0
+- Removed packages related to GPG (not needed since removed `gosu` usage)
+
 # v1.36.0
 
 - [Change LDC version to 1.36.0](https://github.com/vreitech/docker-ldc/commit/c2ab662a240f41da1cd337461c49deaccb91690b)
@@ -17,3 +23,4 @@
 - Change dub package manager version to 1.33.1
 - ld.gold (v1.16) setted up as default linker instead of ld.bfd (v2.40)
 - `Dockerfile` refactored: size of the image slightly decreased (using multistage for building final image, removal of unnecessary packages)
+
