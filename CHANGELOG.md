@@ -1,4 +1,5 @@
 # v1.37.0
+
 - Change LDC version to 1.37.0
 - Change dub package manager version to 1.36.0
 - Removed packages related to GPG (not needed since removed `gosu` usage)
