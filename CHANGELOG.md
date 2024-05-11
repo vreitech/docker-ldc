@@ -1,3 +1,8 @@
+# v1.38.0
+
+- Change LDC version to 1.38.0
+- Change dub package manager version to 1.37.0
+
 # v1.37.0
 
 - Change LDC version to 1.37.0
