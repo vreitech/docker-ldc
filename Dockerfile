@@ -5,6 +5,7 @@ FROM debian:bookworm-slim AS builder
 
 ARG arg_compiler
 ARG arg_compiler_version
+ARG TARGETARCH
 
 ENV DEBIAN_FRONTEND=noninteractive \
   COMPILER=$arg_compiler \
@@ -16,13 +17,26 @@ RUN <<EOF bash
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install ca-certificates libterm-readline-gnu-perl \
   curl xz-utils
   mkdir -p /dlang
-  tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VERSION}-linux-x86_64.tar.xz") -C /dlang
-  rm -rf /dlang/${COMPILER}-${COMPILER_VERSION}-linux-x86_64/lib32
+  case ${TARGETARCH} in
+    x86_64|amd64)
+      tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VERSION}-linux-x86_64.tar.xz") -C /dlang
+      rm -rf /dlang/${COMPILER}-${COMPILER_VERSION}-linux-x86_64/lib32
+      ;;
+    aarch64|arm64)
+      tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VERSION}-linux-aarch64.tar.xz") -C /dlang
+      rm -rf /dlang/${COMPILER}-${COMPILER_VERSION}-linux-aarch64/lib32
+      ;;
+    *)
+      >&2 echo "Architecture '${TARGETARCH}' is not supported."
+      exit 1
+      ;;
+  esac
 EOF
 
 FROM debian:bookworm-slim
 
 LABEL org.opencontainers.image.authors="Stefan Rohe <think@hotmail.de>"
+LABEL org.opencontainers.image.authors="Ethan Reker <ethanepr@hotmail.com>"
 LABEL org.opencontainers.image.authors="Filipp Chertiev <f@fzfx.ru>"
 
 ARG arg_compiler
@@ -45,7 +59,7 @@ RUN <<EOF bash
   apt-get -yqq -o=Dpkg::Use-Pty=0 update
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install apt-utils
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install ca-certificates libterm-readline-gnu-perl \
-  curl binutils-gold gcc gcc-multilib libxml2-dev zlib1g-dev libssl-dev
+  curl binutils-gold gcc libxml2-dev zlib1g-dev libssl-dev
   update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.gold" 20
   update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.bfd" 10
   ldconfig
