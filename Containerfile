@@ -27,7 +27,6 @@ RUN <<EOF bash
       mv "/dlang/${COMPILER}-${COMPILER_VER}-linux-aarch64" "/dlang/${COMPILER}-${COMPILER_VER}"
       ;;
     *)
-      >&2 echo "Unsupported arch '${TARGETARCH}'"
       exit 1
       ;;
   esac
