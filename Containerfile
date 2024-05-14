@@ -18,12 +18,12 @@ RUN <<-EOF bash
   mkdir -p /dlang
   case ${TARGETARCH} in
     x86_64|amd64)
-      tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VER}-linux-x86_64.tar.xz") -C /dlang
-      mv "/dlang/${COMPILER}-${COMPILER_VERSION}-linux-x86_64" "/dlang/${COMPILER}-${COMPILER_VER}"
+      tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VERSION}-linux-x86_64.tar.xz") -C /dlang
+      mv "/dlang/${COMPILER}-${COMPILER_VERSION}-linux-x86_64" "/dlang/${COMPILER}-${COMPILER_VERSION}"
       ;;
     aarch64|arm64)
-      tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VER}-linux-aarch64.tar.xz") -C /dlang
-      mv "/dlang/${COMPILER}-${COMPILER_VERSION}-linux-aarch64" "/dlang/${COMPILER}-${COMPILER_VER}"
+      tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VERSION}-linux-aarch64.tar.xz") -C /dlang
+      mv "/dlang/${COMPILER}-${COMPILER_VERSION}-linux-aarch64" "/dlang/${COMPILER}-${COMPILER_VERSION}"
       ;;
     *)
       >&2 "Architecture '${TARGETARCH} is not supported."
