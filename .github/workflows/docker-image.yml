@@ -5,16 +5,33 @@ on:
     tags:
       - 'v*'
 
+env:
+  images_list: |
+    vreitech/docker-ldc
+    ghcr.io/${{ github.repository }}
+
 jobs:
   push_to_registry:
-    name: Push Docker image to Docker Hub
+    name: Push Docker image to registries
     runs-on: ubuntu-latest
     permissions:
       packages: write
       contents: read
     steps:
     - name: Check out the repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+
+    - name: Fillup metadata
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: ${{ images_list }}
+        flavor: |
+          latest=auto
+          suffix=${platform//\//-},onlatest=true
+        tags: |
+          type=schedule
+          type=semver,pattern={{version}}
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
@@ -22,7 +39,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Log in to the Container registry
+    - name: Log in to the GitHub Container Registry
       uses: docker/login-action@v2
       with:
         registry: ghcr.io
@@ -33,13 +50,23 @@ jobs:
       id: meta
       uses: docker/metadata-action@v4
       with:
-        images: |
-          vreitech/docker-ldc
-          ghcr.io/${{ github.repository }}
+        images: ${{ images_list }}
 
-    - name: Build and push Docker image
+    - name: Build and push Docker image (amd64)
       uses: docker/build-push-action@v4
       with:
+        file: ./Containerfile
+        platforms: linux/amd64
+        context: .
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+
+    - name: Build and push Docker image (arm64)
+      uses: docker/build-push-action@v4
+      with:
+        file: ./Containerfile_arm64
+        platforms: linux/arm64
         context: .
         push: true
         tags: ${{ steps.meta.outputs.tags }}
