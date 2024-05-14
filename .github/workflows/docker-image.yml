@@ -25,7 +25,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v5
       with:
-        images: ${{ images_list }}
+        images: ${images_list}
         flavor: |
           latest=auto
           suffix=${platform//\//-},onlatest=true
