@@ -10,14 +10,15 @@ ARG TARGETARCH
 
 ENV DEBIAN_FRONTEND=noninteractive \
   COMPILER=$compiler \
-  COMPILER_VER=$compiler_ver
+  COMPILER_VER=$compiler_ver \
+  TARGETARCH=$TARGETARCH
 RUN <<-EOF bash
   set -euxo pipefail
   apt-get -yqq -o=Dpkg::Use-Pty=0 update
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install apt-utils
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install ca-certificates libterm-readline-gnu-perl curl xz-utils
   mkdir -p /dlang
-  case \${TARGETARCH} in
+  case ${TARGETARCH} in
     amd64|x86_64)
       tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VER}/${COMPILER}-${COMPILER_VER}-linux-x86_64.tar.xz") -C /dlang
       mv "/dlang/${COMPILER}-${COMPILER_VER}-linux-x86_64" "/dlang/${COMPILER}-${COMPILER_VER}"
