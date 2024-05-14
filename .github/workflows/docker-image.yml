@@ -46,12 +46,6 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
-      uses: docker/metadata-action@v4
-      with:
-        images: ${images_list}
-
     - name: Build and push Docker image (amd64)
       uses: docker/build-push-action@v4
       with:
