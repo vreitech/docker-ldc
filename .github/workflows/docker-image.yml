@@ -50,7 +50,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v4
       with:
-        images: ${{ images_list }}
+        images: ${images_list}
 
     - name: Build and push Docker image (amd64)
       uses: docker/build-push-action@v4
