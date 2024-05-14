@@ -12,7 +12,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
   COMPILER=$compiler \
   COMPILER_VER=$compiler_ver
 RUN <<EOF bash
-  set -xeuo pipefail
+  set -exo pipefail
   apt-get -yqq -o=Dpkg::Use-Pty=0 update
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install apt-utils
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install ca-certificates libterm-readline-gnu-perl curl xz-utils
