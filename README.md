@@ -6,18 +6,22 @@
 # About this fork
 
 This repository forked out of https://github.com/ctrecordings/docker-ldc and https://github.com/lindt/docker-ldc repos.
+Relevant listed at:
+https://github.com/lindt/docker-ldc/graphs/contributors
+https://github.com/ctrecordings/docker-ldc/graphs/contributors
+https://github.com/vreitech/docker-ldc/graphs/contributors
 
 # docker-ldc
 
-Docker image for [LLVM-based](https://github.com/ldc-developers/ldc) [D](https://dlang.org/) Compiler.
+Docker image for [LLVM-based](https://github.com/ldc-developers/ldc) [D](https://dlang.org/) compiler (also known as LDC2 or LDC).
 
 ## Motivation
 
-Installation of a compiler sometimes is cumbersome. This Docker image should take this pain and allow you to easily switch between Versions of the compiler.
+Installation of a compiler sometimes is cumbersome. This Docker image should take this pain and allow you to easily switch between a versions of the compiler.
 
-In case a native installation is required, `curl -fsS https://dlang.org/install.sh | bash -s ldc` could be used.
+In case a native installation is required, `curl -fsS https://dlang.org/install.sh | bash -s ldc` could be used. You may also visit [LLVM-based compiler Releases page](https://github.com/ldc-developers/ldc/releases/) on GitHub.
 
-Docker image allows to use LDC compiler without installation.
+Docker image allows to use LDC compiler and [dub package manager](https://github.com/dlang/dub) without installation.
 
 ## Includes (latest version)
 

@@ -9,15 +9,14 @@ ARG TARGETARCH
 
 ENV DEBIAN_FRONTEND=noninteractive \
   COMPILER=$compiler \
-  COMPILER_VER=$compiler_ver \
-  env_arch=$TARGETARCH
+  COMPILER_VER=$compiler_ver
 RUN <<-EOF bash
   set -euxo pipefail
   apt-get -yqq -o=Dpkg::Use-Pty=0 update
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install apt-utils
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install ca-certificates libterm-readline-gnu-perl curl xz-utils
   mkdir -p /dlang
-  case ${env_arch} in
+  case ${TARGETARCH} in
     x86_64|amd64)
       tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VER}/${COMPILER}-${COMPILER_VER}-linux-x86_64.tar.xz") -C /dlang
       mv "/dlang/${COMPILER}-${COMPILER_VER}-linux-x86_64" "/dlang/${COMPILER}-${COMPILER_VER}"
@@ -27,7 +26,7 @@ RUN <<-EOF bash
       mv "/dlang/${COMPILER}-${COMPILER_VER}-linux-aarch64" "/dlang/${COMPILER}-${COMPILER_VER}"
       ;;
     *)
-      >&2 "Architecture '${env_arch} is not supported."
+      >&2 "Architecture '${TARGETARCH} is not supported."
       exit 1
       ;;
   esac
@@ -36,9 +35,10 @@ EOF
 
 FROM debian:bookworm-slim
 
-LABEL org.opencontainers.image.authors="Stefan Rohe <think@hotmail.de>"
-LABEL org.opencontainers.image.authors="Ethan Reker <ethanepr@hotmail.com>"
-LABEL org.opencontainers.image.authors="Filipp Chertiev <f@fzfx.ru>"
+LABEL org.opencontainers.image.authors "Stefan Rohe <think@hotmail.de>"
+LABEL org.opencontainers.image.authors "Ethan Reker <ethanepr@hotmail.com>"
+LABEL org.opencontainers.image.authors "Filipp Chertiev <f@fzfx.ru>"
+LABEL org.opencontainers.image.description "Docker image for LLVM-based D Compiler"
 
 ARG compiler
 ARG compiler_ver
