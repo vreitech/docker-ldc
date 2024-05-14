@@ -17,6 +17,7 @@ jobs:
     permissions:
       packages: write
       contents: read
+
     steps:
     - name: Check out the repo
       uses: actions/checkout@v4
@@ -47,26 +48,15 @@ jobs:
         images: ${{ env.images_list }}
         flavor: |
           latest=auto
-          suffix=${{ platform }},onlatest=true
         tags: |
           type=schedule
-          type=semver,pattern=${{ version }}
+          type=semver,pattern={{version}}
 
-    - name: Build and push Docker image (amd64)
+    - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
         file: ./Containerfile
-        platforms: linux/amd64
-        context: .
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
-
-    - name: Build and push Docker image (arm64)
-      uses: docker/build-push-action@v5
-      with:
-        file: ./Containerfile_arm64
-        platforms: linux/arm64
+        plarforms: linux/amd64,linux/arm64
         context: .
         push: true
         tags: ${{ steps.meta.outputs.tags }}

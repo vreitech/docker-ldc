@@ -1,12 +1,12 @@
 ARG arg_compiler=ldc2
 ARG arg_compiler_version=1.38.0
-ARG arch=x86_64
+ARG TARGETARCH
 
 FROM debian:bookworm-slim AS builder
 
 ARG arg_compiler
 ARG arg_compiler_version
-ARG arch
+ARG TARGETARCH
 
 ENV DEBIAN_FRONTEND=noninteractive \
   COMPILER=$arg_compiler \
@@ -18,8 +18,21 @@ RUN <<EOF bash
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install ca-certificates libterm-readline-gnu-perl \
   curl xz-utils
   mkdir -p /dlang
-  tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VERSION}-linux-${arch}.tar.xz") -C /dlang
-  rm -rf /dlang/${COMPILER}-${COMPILER_VERSION}-linux-${arch}/lib32
+  case ${TARGETARCH} in
+    amd64|x86_64)
+      tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VERSION}-linux-x86_64.tar.xz") -C /dlang
+      mv "/dlang/${COMPILER}-${COMPILER_VERSION}-linux-x86_64" "/dlang/${COMPILER}-${COMPILER_VERSION}"
+      ;;
+    arm64|aarch64)
+      tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VERSION}-linux-aarch64.tar.xz") -C /dlang
+      mv "/dlang/${COMPILER}-${COMPILER_VERSION}-linux-aarch64" "/dlang/${COMPILER}-${COMPILER_VERSION}"
+      ;;
+    *)
+      >&2 echo "Unsupported architecture '${TARGETARCH}'"
+      exit 1
+      ;;
+  esac
+  rm -rf "/dlang/${COMPILER}-${COMPILER_VERSION}/lib32"
 EOF
 
 FROM debian:bookworm-slim
@@ -30,7 +43,6 @@ LABEL org.opencontainers.image.authors="Filipp Chertiev <f@fzfx.ru>"
 
 ARG arg_compiler
 ARG arg_compiler_version
-ARG arch
 
 WORKDIR /src
 
@@ -38,10 +50,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
   COMPILER=$arg_compiler \
   COMPILER_VERSION=$arg_compiler_version
 ENV COMPILER_BIN=${COMPILER} \
-  PATH="/dlang/${COMPILER}-${COMPILER_VERSION}-linux-${arch}/bin:${PATH}" \
-  LD_LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}-linux-${arch}/lib" \
-  LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}-linux-${arch}/lib" \
-  PS1="(${COMPILER}-${COMPILER_VERSION}) \\u@\\h:\\w\$" \
+  PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/bin:${PATH}" \
+  LD_LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib" \
+  LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib" \
   DC=${COMPILER_BIN}
 COPY --from=builder /dlang /dlang
 RUN <<EOF bash
