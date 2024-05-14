@@ -6,10 +6,11 @@
 # About this fork
 
 This repository forked out of https://github.com/ctrecordings/docker-ldc and https://github.com/lindt/docker-ldc repos.
-Relevant listed at:
-https://github.com/lindt/docker-ldc/graphs/contributors
-https://github.com/ctrecordings/docker-ldc/graphs/contributors
-https://github.com/vreitech/docker-ldc/graphs/contributors
+
+Relevant contributors listed at:
+- https://github.com/lindt/docker-ldc/graphs/contributors
+- https://github.com/ctrecordings/docker-ldc/graphs/contributors
+- https://github.com/vreitech/docker-ldc/graphs/contributors
 
 # docker-ldc
 
