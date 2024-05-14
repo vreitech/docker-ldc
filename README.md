@@ -27,12 +27,14 @@ Docker image allows to use LDC compiler and [dub package manager](https://github
 
 - Debian 12 (bookworm) environment
 - ldc2 compiler v1.38.0
-- ld.gold linker v1.16
-- ld.bfd linker v2.40
-- dub package manager v1.37.0
-- libxml2 library v2.9.14
-- libz (zlib) library v1.2.13
-- libssl library v3.0.11
+- ld.gold linker
+- ld.bfd linker
+- dub package manager
+- libxml2 library
+- libz (zlib)
+- libssl library
+
+Since v1.38.0 a docker images has build for aarch64 architecture in addition to x86_64.
 
 ## Usage
 

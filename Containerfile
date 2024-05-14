@@ -1,15 +1,15 @@
 ARG compiler=ldc2
-ARG compiler_ver=1.38.0
+ARG compiler_version=1.38.0
 
 FROM debian:bookworm-slim AS builder
 
 ARG compiler
-ARG compiler_ver
+ARG compiler_version
 ARG TARGETARCH
 
 ENV DEBIAN_FRONTEND=noninteractive \
   COMPILER=$compiler \
-  COMPILER_VER=$compiler_ver
+  COMPILER_VERSION=$compiler_version
 RUN <<-EOF bash
   set -euxo pipefail
   apt-get -yqq -o=Dpkg::Use-Pty=0 update
@@ -18,19 +18,19 @@ RUN <<-EOF bash
   mkdir -p /dlang
   case ${TARGETARCH} in
     x86_64|amd64)
-      tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VER}/${COMPILER}-${COMPILER_VER}-linux-x86_64.tar.xz") -C /dlang
-      mv "/dlang/${COMPILER}-${COMPILER_VER}-linux-x86_64" "/dlang/${COMPILER}-${COMPILER_VER}"
+      tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VER}-linux-x86_64.tar.xz") -C /dlang
+      mv "/dlang/${COMPILER}-${COMPILER_VERSION}-linux-x86_64" "/dlang/${COMPILER}-${COMPILER_VER}"
       ;;
     aarch64|arm64)
-      tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VER}/${COMPILER}-${COMPILER_VER}-linux-aarch64.tar.xz") -C /dlang
-      mv "/dlang/${COMPILER}-${COMPILER_VER}-linux-aarch64" "/dlang/${COMPILER}-${COMPILER_VER}"
+      tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VERSION}/${COMPILER}-${COMPILER_VER}-linux-aarch64.tar.xz") -C /dlang
+      mv "/dlang/${COMPILER}-${COMPILER_VERSION}-linux-aarch64" "/dlang/${COMPILER}-${COMPILER_VER}"
       ;;
     *)
       >&2 "Architecture '${TARGETARCH} is not supported."
       exit 1
       ;;
   esac
-  rm -rf "/dlang/${COMPILER}-${COMPILER_VER}/lib32"
+  rm -rf "/dlang/${COMPILER}-${COMPILER_VERSION}/lib32"
 EOF
 
 FROM debian:bookworm-slim
@@ -41,17 +41,17 @@ LABEL org.opencontainers.image.authors "Filipp Chertiev <f@fzfx.ru>"
 LABEL org.opencontainers.image.description "Docker image for LLVM-based D Compiler"
 
 ARG compiler
-ARG compiler_ver
+ARG compiler_version
 
 WORKDIR /src
 
 ENV DEBIAN_FRONTEND=noninteractive \
   COMPILER=$compiler \
-  COMPILER_VER=$compiler_ver
+  COMPILER_VERSION=$compiler_version
 ENV COMPILER_BIN=${COMPILER} \
-  PATH="/dlang/${COMPILER}-${COMPILER_VER}/bin:${PATH}" \
-  LD_LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VER}/lib" \
-  LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VER}/lib" \
+  PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/bin:${PATH}" \
+  LD_LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib" \
+  LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib" \
   DC=${COMPILER_BIN}
 COPY --from=builder /dlang /dlang
 RUN <<-EOF bash
