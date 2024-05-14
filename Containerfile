@@ -17,12 +17,12 @@ RUN <<-EOF bash
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install apt-utils
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install ca-certificates libterm-readline-gnu-perl curl xz-utils
   mkdir -p /dlang
-  case ${TARGETARCH} in
-    "amd64|x86_64")
+  case \${TARGETARCH} in
+    amd64|x86_64)
       tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VER}/${COMPILER}-${COMPILER_VER}-linux-x86_64.tar.xz") -C /dlang
       mv "/dlang/${COMPILER}-${COMPILER_VER}-linux-x86_64" "/dlang/${COMPILER}-${COMPILER_VER}"
       ;;
-    "arm64|aarch64")
+    arm64|aarch64)
       tar xJf <(curl -LfsS "https://github.com/ldc-developers/ldc/releases/download/v${COMPILER_VER}/${COMPILER}-${COMPILER_VER}-linux-aarch64.tar.xz") -C /dlang
       mv "/dlang/${COMPILER}-${COMPILER_VER}-linux-aarch64" "/dlang/${COMPILER}-${COMPILER_VER}"
       ;;
@@ -54,7 +54,7 @@ ENV COMPILER_BIN=${COMPILER} \
   DC=${COMPILER_BIN}
 COPY --from=builder /dlang /dlang
 RUN <<-EOF bash
-  set -xeuo pipefail
+  set -euxo pipefail
   apt-get -yqq -o=Dpkg::Use-Pty=0 update
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install apt-utils
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install ca-certificates libterm-readline-gnu-perl \
