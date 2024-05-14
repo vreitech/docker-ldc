@@ -2,6 +2,7 @@
 
 - Change LDC version to 1.38.0
 - Change dub package manager version to 1.37.0
+- Added building of images for aarch64 architecture in addition to x86_64.
 
 # v1.37.0
 
