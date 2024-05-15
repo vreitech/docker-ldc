@@ -9,7 +9,7 @@ if [ "${USER_ID}" -ne "0" ]; then
   useradd --shell /bin/bash -M -u ${USER_ID} -g ${GROUP_ID} -o -c "" ${USER_NAME}
   usermod -aG sudo ${USER_NAME}
 
-  setpriv --reuid=${USER_ID} --regid=${GROUP_ID} --init-groups ${USER_NAME} /bin/bash -c "$@"
+  setpriv --reuid=${USER_ID} --regid=${GROUP_ID} --init-groups /bin/bash -c "$@"
 else
   exec "$@"
 fi
