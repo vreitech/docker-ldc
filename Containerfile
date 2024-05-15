@@ -26,7 +26,7 @@ RUN <<-EOF bash
       mv "/dlang/${COMPILER}-${COMPILER_VERSION}-linux-aarch64" "/dlang/${COMPILER}-${COMPILER_VERSION}"
       ;;
     *)
-      >&2 "Architecture '${TARGETARCH} is not supported."
+      >&2 "Architecture '${TARGETARCH}' is not supported."
       exit 1
       ;;
   esac
