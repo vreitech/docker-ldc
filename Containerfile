@@ -1,7 +1,7 @@
 ARG compiler=ldc2
 ARG compiler_version=1.38.0
 
-FROM debian:bookworm-slim AS builder
+FROM docker.io/debian:bookworm-slim AS builder
 
 ARG compiler
 ARG compiler_version
@@ -33,7 +33,7 @@ RUN <<-EOF bash
   rm -rf "/dlang/${COMPILER}-${COMPILER_VERSION}/lib32"
 EOF
 
-FROM debian:bookworm-slim
+FROM docker.io/debian:bookworm-slim
 
 LABEL org.opencontainers.image.authors "Stefan Rohe <think@hotmail.de>"
 LABEL org.opencontainers.image.authors "Ethan Reker <ethanepr@hotmail.com>"
