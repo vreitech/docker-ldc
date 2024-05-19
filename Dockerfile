@@ -1,5 +1,5 @@
 ARG arg_compiler=ldc
-ARG arg_compiler_version=1.36.0
+ARG arg_compiler_version=1.35.0
 
 FROM debian:bookworm-slim AS builder
 
