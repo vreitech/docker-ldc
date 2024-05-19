@@ -24,10 +24,10 @@ In case a native installation is required, `curl -fsS https://dlang.org/install.
 
 Docker image allows to use LDC compiler and [dub package manager](https://github.com/dlang/dub) without installation.
 
-## Includes (latest version)
+## Includes (this version)
 
 - Debian 12 (bookworm) environment
-- ldc2 compiler v1.38.0
+- ldc2 compiler v1.27.0
 - ld.gold linker
 - ld.bfd linker
 - dub package manager
