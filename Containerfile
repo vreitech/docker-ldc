@@ -1,5 +1,5 @@
 ARG compiler=ldc2
-ARG compiler_version=1.28.1
+ARG compiler_version=1.29.0
 
 FROM docker.io/debian:bookworm-slim AS builder
 
