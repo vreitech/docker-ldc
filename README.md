@@ -27,7 +27,7 @@ Docker image allows to use LDC compiler and [dub package manager](https://github
 ## Includes (this version)
 
 - Debian 12 (bookworm) environment
-- ldc2 compiler v1.30.0
+- ldc2 compiler v1.31.0
 - ld.gold linker
 - ld.bfd linker
 - dub package manager
