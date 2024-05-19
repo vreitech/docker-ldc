@@ -1,5 +1,5 @@
-# 2-v1.33.0
-- Build 2nd epoch image with ldc2 v1.33.0, based on master branch from 19.05.2024
+# 2-v1.34.0
+- Build 2nd epoch image with ldc2 v1.34.0, based on master branch from 19.05.2024
 
 # v1.38.0
 
