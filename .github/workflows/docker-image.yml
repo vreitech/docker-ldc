@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v*'
+      - '[2-9]-v*'
 
 env:
   images_list: |
