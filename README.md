@@ -42,10 +42,10 @@ Since v1.38.0 a docker images has build for aarch64 architecture in addition to 
 Place a `test.d` (for example with the contents of `import std.stdio; void main() { writeln("It works!"); }`) in your current directory.
 Then execute
 ```
-docker run --rm -it -v "$(pwd):/src" docker.io/vreitech/docker-ldc ldc2 test.d
+docker run --rm -it -v "$(pwd):/src" docker.io/vreitech/docker-ldc:latest ldc2 test.d
 ```
 or
 ```
-docker run --rm -it -v "$(pwd):/src" ghcr.io/vreitech/docker-ldc ldc2 test.d
+docker run --rm -it -v "$(pwd):/src" ghcr.io/vreitech/docker-ldc:latest ldc2 test.d
 ```
 
