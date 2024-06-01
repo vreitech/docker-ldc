@@ -39,7 +39,7 @@ Docker image allows to use LDC compiler and [dub package manager](https://github
 
 Epoch 1 images naming starts with `v` prefix. It's kind of "legacy" images which based on master branch at the moment of LDC2 verions release, and keeps unchanged (except for bugfixes).
 
-Epoch 2 images naming stats with `2-v` prefix. Epoch 2 images based on master branch from 19.05.2024, and contains all changes did in master branch till the date, including using `setpriv` instead of `gosu`, and `aarch64` architecture support in addition to `x86_64` (except for `2-v1.33.0` image).
+Epoch 2 images naming starts with `2-v` prefix. Epoch 2 images based on master branch from 19.05.2024, and contains all changes did in master branch till the date, including using `setpriv` instead of `gosu`, and `aarch64` architecture support in addition to `x86_64` (except for `2-v1.33.0` image).
 
 ## Usage
 
