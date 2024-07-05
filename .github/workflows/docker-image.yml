@@ -55,5 +55,6 @@ jobs:
         platforms: linux/amd64,linux/arm64
         context: .
         push: true
+        outputs: type=image,oci-mediatypes=true,compression=zstd,compression-level=19
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
