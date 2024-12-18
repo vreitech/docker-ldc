@@ -63,3 +63,4 @@ jobs:
           annotation-index.org.opencontainers.image.description=Docker image for LLVM-based D Compiler,
           annotation-index.org.opencontainers.image.authors=Stefan Rohe <think@hotmail.de>; Ethan Reker <ethanepr@hotmail.com>; Filipp Chertiev <f@fzfx.ru>
         tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
