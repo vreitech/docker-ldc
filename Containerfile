@@ -35,6 +35,9 @@ EOF
 
 FROM docker.io/debian:bookworm-slim
 
+LABEL org.opencontainers.image.authors "Stefan Rohe <think@hotmail.de>; Ethan Reker <ethanepr@hotmail.com>; Filipp Chertiev <f@fzfx.ru>"
+LABEL org.opencontainers.image.description "Docker image for LLVM-based D Compiler"
+
 ARG compiler
 ARG compiler_version
 
