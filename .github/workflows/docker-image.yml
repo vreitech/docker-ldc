@@ -55,6 +55,14 @@ jobs:
         platforms: linux/amd64,linux/arm64
         context: .
         push: true
-        outputs: type=image,oci-mediatypes=true,compression=zstd,compression-level=19
+        outputs: >-
+          type=image,
+          oci-mediatypes=true,
+          compression=zstd,
+          compression-level=19,
+          annotation-index.org.opencontainers.image.description=Docker image for LLVM-based D Compiler,
+          annotation-index.org.opencontainers.image.authors "Stefan Rohe <think@hotmail.de>",
+          annotation-index.org.opencontainers.image.authors "Ethan Reker <ethanepr@hotmail.com>",
+          annotation-index.org.opencontainers.image.authors "Filipp Chertiev <f@fzfx.ru>"
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
