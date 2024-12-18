@@ -35,9 +35,7 @@ EOF
 
 FROM docker.io/debian:bookworm-slim
 
-LABEL org.opencontainers.image.authors "Stefan Rohe <think@hotmail.de>"
-LABEL org.opencontainers.image.authors "Ethan Reker <ethanepr@hotmail.com>"
-LABEL org.opencontainers.image.authors "Filipp Chertiev <f@fzfx.ru>"
+LABEL org.opencontainers.image.authors "Stefan Rohe <think@hotmail.de>; Ethan Reker <ethanepr@hotmail.com>; Filipp Chertiev <f@fzfx.ru>"
 LABEL org.opencontainers.image.description "Docker image for LLVM-based D Compiler"
 
 ARG compiler
@@ -51,8 +49,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 ENV COMPILER_BIN=${COMPILER} \
   PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/bin:${PATH}" \
   LD_LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib" \
-  LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib" \
-  DC=${COMPILER_BIN}
+  LIBRARY_PATH="/dlang/${COMPILER}-${COMPILER_VERSION}/lib"
 COPY --from=builder /dlang /dlang
 RUN <<-EOF bash
   set -euxo pipefail

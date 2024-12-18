@@ -49,12 +49,18 @@ jobs:
         images: ${{ env.images_list }}
 
     - name: Build and push Docker image
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         file: ./Containerfile
         platforms: linux/amd64,linux/arm64
         context: .
         push: true
-        outputs: type=image,oci-mediatypes=true,compression=zstd,compression-level=19
+        outputs: >-
+          type=image,
+          oci-mediatypes=true,
+          compression=zstd,
+          compression-level=19,
+          annotation-index.org.opencontainers.image.description=Docker image for LLVM-based D Compiler,
+          annotation-index.org.opencontainers.image.authors=Stefan Rohe <think@hotmail.de>; Ethan Reker <ethanepr@hotmail.com>; Filipp Chertiev <f@fzfx.ru>
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
