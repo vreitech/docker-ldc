@@ -49,7 +49,7 @@ jobs:
         images: ${{ env.images_list }}
 
     - name: Build and push Docker image
-      uses: docker/build-push-action@v5
+      uses: docker/build-push-action@v6
       with:
         file: ./Containerfile
         platforms: linux/amd64,linux/arm64
@@ -65,4 +65,3 @@ jobs:
           annotation-index.org.opencontainers.image.authors=Ethan Reker <ethanepr@hotmail.com>,
           annotation-index.org.opencontainers.image.authors=Filipp Chertiev <f@fzfx.ru>
         tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
