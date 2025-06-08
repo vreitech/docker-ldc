@@ -1,3 +1,7 @@
+# 2-v1.41.0
+
+- Change LDC version to 1.41.0 (and possible changes in versions of related utils/libs)
+
 # 2-v1.40.1
 
 - Change LDC version to 1.40.1 (and possible changes in versions of related utils/libs)
