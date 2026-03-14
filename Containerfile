@@ -1,7 +1,7 @@
 ARG compiler=ldc2
-ARG compiler_version=1.41.0
+ARG compiler_version=1.42.0
 
-FROM docker.io/debian:bookworm-slim AS builder
+FROM docker.io/debian:trixie-slim AS builder
 
 ARG compiler
 ARG compiler_version
@@ -33,7 +33,7 @@ RUN <<-EOF bash
   rm -rf "/dlang/${COMPILER}-${COMPILER_VERSION}/lib32"
 EOF
 
-FROM docker.io/debian:bookworm-slim
+FROM docker.io/debian:trixie-slim
 
 LABEL org.opencontainers.image.authors "Stefan Rohe <think@hotmail.de>; Ethan Reker <ethanepr@hotmail.com>; Filipp Chertiev <f@fzfx.ru>"
 LABEL org.opencontainers.image.description "Docker image for LLVM-based D Compiler"
