@@ -1,5 +1,5 @@
 ARG compiler=ldc2
-ARG compiler_version=1.42.0
+ARG compiler_version=1.43.0
 
 FROM docker.io/debian:trixie-slim AS builder
 
