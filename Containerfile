@@ -56,7 +56,7 @@ RUN <<-EOF bash
   apt-get -yqq -o=Dpkg::Use-Pty=0 update
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install apt-utils
   apt-get -yqq -o=Dpkg::Use-Pty=0 --no-install-recommends install ca-certificates libterm-readline-gnu-perl \
-  curl binutils-gold gcc libxml2-dev zlib1g-dev libssl-dev
+  curl binutils-gold gcc libxml2-dev zlib1g-dev libssl-dev libzstd-dev
   update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.gold" 20
   update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.bfd" 10
   ldconfig
